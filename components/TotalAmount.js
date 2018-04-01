@@ -32,7 +32,6 @@ export default class TotalAmount extends Component {
         <Calculator 
           percent={10}
           totalAmount={this.state.totalAmount}/>
-
         <Calculator 
           percent={15}
           totalAmount={this.state.totalAmount}/>

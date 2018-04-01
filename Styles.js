@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   titleContainer: {
-    backgroundColor: '#AABBCC',
     height:'15%',
     marginTop: '10%'
   },
@@ -37,22 +36,22 @@ const styles = StyleSheet.create({
   },
   totalAmountContainer: {
     backgroundColor:'brown',
-    height:'25%',
+    height:50,
     flexDirection:'row',
+    alignItems:'center'
     
   },
   textInputContainer: {
     borderColor: 'black',
     borderWidth: 1,
     alignItems: 'center',
-    height: baseTextHeight + 30,
-    width: '50%'
+    height: baseTextHeight + 20,
+    width: '40%'
   },
   tipCalculatorContainer: {
     backgroundColor:'white',
-    height: '15%'
+    height: 75
   },
-  
 });
 
 export {styles as default}
