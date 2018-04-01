@@ -22,7 +22,7 @@ class TipAmount15 extends Component {
   componentWillReceiveProps (props) {
     console.log("Compoent received prop");
     var setTipAmount15 = 'bbb';
-    this.tipAmount15 = this.setState(tipAmount15: setTipAmount15);
+    //this.tipAmount15 = this.setState(tipAmount15: setTipAmount15);
   }
   // _setTipAmount = () => {
   //   this.setState(tipAmount15: 'bbbbb');
@@ -46,19 +46,25 @@ class TotalAmount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalAmount: ''
+      totalAmount: '',
+      tipAmount15:'',
+      postTipAmount15:''
     }
   }
 
-  handleTotalAmount = (event) => {
-    console.log("Handling change: " + event);
-    this.setState({totalAmount: event});
+  handleTotalAmount = (totalAmountInput) => {
+    console.log("Handling change: " + totalAmountInput);
+    this.setState({totalAmount: totalAmountInput});
     console.log("Total Amount: " + this.state.totalAmount);
+    this.setState({tipAmount15: parseFloat(totalAmountInput*.15).toFixed(2)})
+    console.log(totalAmountInput * 1.15)
+    this.setState({postTipAmount15: parseFloat(totalAmountInput * 1.15).toFixed(2)})
+
   }
   render() {
     const totalAmount = this.state.totalAmount;
     return (
-      
+      <View>
       <View style={styles.totalAmountContainer}>
           <Text>Total Amount: </Text>
             <TextInput
@@ -70,6 +76,13 @@ class TotalAmount extends Component {
             onChangeText={this.handleTotalAmount}
             />
             
+      </View>
+      <View style={styles.tipCalculatorContainer}>
+        
+            <Text>15%</Text>
+            <Text>Tip Amount: {this.state.tipAmount15}</Text>
+            <Text>Total Amount: {this.state.postTipAmount15}</Text>
+        </View>
       </View>
       
 
@@ -93,9 +106,7 @@ export default class App extends Component {
           <Text style={styles.titleText}>Tip Calculator</Text>   
         </View>
         <TotalAmount/>
-        <TipAmount15
-        totalAmount={TotalAmount.totalAmount}
-        />
+        
         {/* <TipAmount15
           tipAmount15='ccc'/> */}
       </View>
