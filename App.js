@@ -11,58 +11,75 @@ import {  Platform, StyleSheet, Text, View, TextInput, Alert
 import Calculator from './components/Calculator';
 
 class TipAmount15 extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      percent: '',
       totalAmount: '',
-      tipAmount15: 'asdfasdf'
+      tipAmount15:'',
+      postTipAmount15:''
     }
   }
+  componentWillReceiveProps(newProps) {
+    if(newProps.totalAmount != this.props.totalAmount){
+      var percent = this.props.percent;
+      var totalAmountInput = newProps.totalAmount;
+      console.log("Percent: " + percent)
+      console.log("Handling change: " + totalAmountInput);
+      console.log("Total Amount: " + this.state.totalAmount);
+      console.log(totalAmountInput * 1.15)
+      this.setState({totalAmount: totalAmountInput});
+      
+      this.setState({tipAmount15: parseFloat(totalAmountInput*(percent/100)).toFixed(2)})
+      
+      this.setState({postTipAmount15: parseFloat(totalAmountInput * (1+(percent/100))).toFixed(2)})
 
-  componentWillReceiveProps (props) {
-    console.log("Compoent received prop");
-    var setTipAmount15 = 'bbb';
-    //this.tipAmount15 = this.setState(tipAmount15: setTipAmount15);
+    }
+    
   }
+
   // _setTipAmount = () => {
   //   this.setState(tipAmount15: 'bbbbb');
   // }
-  render() {
+  render() { 
     return (
-        <View style={styles.tipCalculatorContainer}>
-        
-            <Text>15%</Text>
+      <View style={styles.tipCalculatorContainer}>     
+            <Text>{this.props.percent}%</Text>
             <Text>Tip Amount: {this.state.tipAmount15}</Text>
-            <Text>Total Amount: </Text>
+            <Text>Total Amount: {this.state.postTipAmount15}</Text>
         </View>
-        
-
     )
   }
-
 }
 
 class TotalAmount extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //Calculator: null,
+      //percent: '',
       totalAmount: '',
-      tipAmount15:'',
-      postTipAmount15:''
+      //tipAmount15:'',
+      //postTipAmount15:''
     }
   }
 
   handleTotalAmount = (totalAmountInput) => {
-    console.log("Handling change: " + totalAmountInput);
-    this.setState({totalAmount: totalAmountInput});
-    console.log("Total Amount: " + this.state.totalAmount);
-    this.setState({tipAmount15: parseFloat(totalAmountInput*.15).toFixed(2)})
-    console.log(totalAmountInput * 1.15)
-    this.setState({postTipAmount15: parseFloat(totalAmountInput * 1.15).toFixed(2)})
+    this.setState({
+      totalAmount: totalAmountInput
+    })
+    //var percent = this.props.percent;
+    //console.log("Percent: " + percent)
+    //console.log("Handling change: " + totalAmountInput);
+    //this.setState({totalAmount: totalAmountInput});
+    //console.log("Total Amount: " + this.state.totalAmount);
+    //this.setState({tipAmount15: parseFloat(totalAmountInput*(percent/100)).toFixed(2)})
+    //console.log(totalAmountInput * 1.15)
+    //this.setState({postTipAmount15: parseFloat(totalAmountInput * (1+(percent/100))).toFixed(2)})
 
   }
   render() {
-    const totalAmount = this.state.totalAmount;
+
     return (
       <View>
       <View style={styles.totalAmountContainer}>
@@ -74,18 +91,27 @@ class TotalAmount extends Component {
             //keyboardType='number-pad'
             //returnKeyType='done'
             onChangeText={this.handleTotalAmount}
+            onSubmitEditing={this.handleTotalAmount}
             />
             
       </View>
-      <View style={styles.tipCalculatorContainer}>
+      <TipAmount15 
+        percent={15}
+        totalAmount={this.state.totalAmount}/>
+              <TipAmount15 
+        percent={18}
+        totalAmount={this.state.totalAmount}/>
+        {/* <TipAmount15 
+        percent={18}
+        tipAmount15={this.state.tipAmount15}
+        postTipAmount15={this.state.postTipAmount15}/> */}
+      {/* <View style={styles.tipCalculatorContainer}>
         
-            <Text>15%</Text>
+            <Text>{this.props.percent}%</Text>
             <Text>Tip Amount: {this.state.tipAmount15}</Text>
             <Text>Total Amount: {this.state.postTipAmount15}</Text>
-        </View>
+        </View> */}
       </View>
-      
-
     )
   }
 }
@@ -161,7 +187,7 @@ const styles = StyleSheet.create({
   },
   tipCalculatorContainer: {
     backgroundColor:'white',
-    height:'70%'
+    height:'25%'
   },
   
 });

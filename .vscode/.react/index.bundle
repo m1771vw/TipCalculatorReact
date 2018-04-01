@@ -60537,23 +60537,40 @@ __d(function (global, _require, module, exports, _dependencyMap) {
   var TipAmount15 = _wrapComponent("TipAmount15")(function (_Component) {
     _inherits(TipAmount15, _Component);
 
-    function TipAmount15() {
+    function TipAmount15(props) {
       _classCallCheck(this, TipAmount15);
 
-      var _this = _possibleConstructorReturn(this, (TipAmount15.__proto__ || Object.getPrototypeOf(TipAmount15)).call(this));
+      var _this = _possibleConstructorReturn(this, (TipAmount15.__proto__ || Object.getPrototypeOf(TipAmount15)).call(this, props));
 
       _this.state = {
+        percent: '',
         totalAmount: '',
-        tipAmount15: 'asdfasdf'
+        tipAmount15: '',
+        postTipAmount15: ''
       };
       return _this;
     }
 
     _createClass(TipAmount15, [{
       key: "componentWillReceiveProps",
-      value: function componentWillReceiveProps(props) {
-        console.log("Compoent received prop");
-        var setTipAmount15 = 'bbb';
+      value: function componentWillReceiveProps(newProps) {
+        if (newProps.totalAmount != this.props.totalAmount) {
+          var percent = this.props.percent;
+          var totalAmountInput = newProps.totalAmount;
+          console.log("Percent: " + percent);
+          console.log("Handling change: " + totalAmountInput);
+          console.log("Total Amount: " + this.state.totalAmount);
+          console.log(totalAmountInput * 1.15);
+          this.setState({
+            totalAmount: totalAmountInput
+          });
+          this.setState({
+            tipAmount15: parseFloat(totalAmountInput * (percent / 100)).toFixed(2)
+          });
+          this.setState({
+            postTipAmount15: parseFloat(totalAmountInput * (1 + percent / 100)).toFixed(2)
+          });
+        }
       }
     }, {
       key: "render",
@@ -60564,7 +60581,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             style: styles.tipCalculatorContainer,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 32
+              lineNumber: 46
             }
           },
           _react3.default.createElement(
@@ -60572,17 +60589,18 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             {
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 34
+                lineNumber: 47
               }
             },
-            "15%"
+            this.props.percent,
+            "%"
           ),
           _react3.default.createElement(
             _reactNative.Text,
             {
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 35
+                lineNumber: 48
               }
             },
             "Tip Amount: ",
@@ -60593,10 +60611,11 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             {
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 36
+                lineNumber: 49
               }
             },
-            "Total Amount: "
+            "Total Amount: ",
+            this.state.postTipAmount15
           )
         );
       }
@@ -60614,29 +60633,13 @@ __d(function (global, _require, module, exports, _dependencyMap) {
       var _this2 = _possibleConstructorReturn(this, (TotalAmount.__proto__ || Object.getPrototypeOf(TotalAmount)).call(this, props));
 
       _this2.handleTotalAmount = function (totalAmountInput) {
-        console.log("Handling change: " + totalAmountInput);
-
         _this2.setState({
           totalAmount: totalAmountInput
-        });
-
-        console.log("Total Amount: " + _this2.state.totalAmount);
-
-        _this2.setState({
-          tipAmount15: parseFloat(totalAmountInput * .15).toFixed(2)
-        });
-
-        console.log(totalAmountInput * 1.15);
-
-        _this2.setState({
-          postTipAmount15: parseFloat(totalAmountInput * 1.15).toFixed(2)
         });
       };
 
       _this2.state = {
-        totalAmount: '',
-        tipAmount15: '',
-        postTipAmount15: ''
+        totalAmount: ''
       };
       return _this2;
     }
@@ -60644,13 +60647,12 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     _createClass(TotalAmount, [{
       key: "render",
       value: function render() {
-        var totalAmount = this.state.totalAmount;
         return _react3.default.createElement(
           _reactNative.View,
           {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 67
+              lineNumber: 84
             }
           },
           _react3.default.createElement(
@@ -60659,7 +60661,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               style: styles.totalAmountContainer,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 68
+                lineNumber: 85
               }
             },
             _react3.default.createElement(
@@ -60667,7 +60669,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 69
+                  lineNumber: 86
                 }
               },
               "Total Amount: "
@@ -60677,54 +60679,29 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               placeholder: "Enter Total Amount",
               placeholderTextColor: "black",
               onChangeText: this.handleTotalAmount,
+              onSubmitEditing: this.handleTotalAmount,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 70
+                lineNumber: 87
               }
             })
           ),
-          _react3.default.createElement(
-            _reactNative.View,
-            {
-              style: styles.tipCalculatorContainer,
-              __source: {
-                fileName: _jsxFileName,
-                lineNumber: 80
-              }
-            },
-            _react3.default.createElement(
-              _reactNative.Text,
-              {
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 82
-                }
-              },
-              "15%"
-            ),
-            _react3.default.createElement(
-              _reactNative.Text,
-              {
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 83
-                }
-              },
-              "Tip Amount: ",
-              this.state.tipAmount15
-            ),
-            _react3.default.createElement(
-              _reactNative.Text,
-              {
-                __source: {
-                  fileName: _jsxFileName,
-                  lineNumber: 84
-                }
-              },
-              "Total Amount: ",
-              this.state.postTipAmount15
-            )
-          )
+          _react3.default.createElement(TipAmount15, {
+            percent: 15,
+            totalAmount: this.state.totalAmount,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 98
+            }
+          }),
+          _react3.default.createElement(TipAmount15, {
+            percent: 18,
+            totalAmount: this.state.totalAmount,
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 101
+            }
+          })
         );
       }
     }]);
@@ -60753,7 +60730,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             style: styles.background,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 104
+              lineNumber: 130
             }
           },
           _react3.default.createElement(
@@ -60762,7 +60739,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
               style: styles.titleContainer,
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 105
+                lineNumber: 131
               }
             },
             _react3.default.createElement(
@@ -60771,7 +60748,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 style: styles.titleText,
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 106
+                  lineNumber: 132
                 }
               },
               "Tip Calculator"
@@ -60780,7 +60757,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
           _react3.default.createElement(TotalAmount, {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 108
+              lineNumber: 134
             }
           })
         );
@@ -60839,7 +60816,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     },
     tipCalculatorContainer: {
       backgroundColor: 'white',
-      height: '70%'
+      height: '25%'
     }
   });
 },493,[112,131,12,494],"App.js");
