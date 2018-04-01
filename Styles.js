@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   tipCalculatorContainer: {
     backgroundColor:'white',
-    height:'70%'
+    height: '15%'
   },
   
 });
